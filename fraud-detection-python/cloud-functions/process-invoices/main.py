@@ -77,6 +77,7 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
     source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
 
     job_config = bigquery.LoadJobConfig(
+        autodetect=False,
         schema_update_options=schema_update_options,
         source_format=source_format,
     )

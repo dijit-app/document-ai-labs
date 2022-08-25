@@ -73,7 +73,9 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
 
     print(json_object_datastore)
     entity = datastore.Entity(key=datastore_client.key('myKey'))
-    entity.update([json_object_datastore])
+    # entity.update([json_object_datastore])
+    blog = {'URL': 'datacamp.com', 'name': 'Datacamp'}
+    entity.update(blog)
     datastore_client.put(entity)
 
     print(entity)

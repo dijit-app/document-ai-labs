@@ -15,6 +15,9 @@ from google.cloud import bigquery
 from google.cloud import documentai_v1 as documentai
 from google.cloud import pubsub_v1, storage
 
+from google.cloud import datastore
+from datetime import datetime
+
 # Reading environment variables
 gcs_output_uri_prefix = os.environ.get("GCS_OUTPUT_URI_PREFIX")
 PROJECT_ID = os.environ.get("GCP_PROJECT")
@@ -51,6 +54,7 @@ docai_client = documentai.DocumentProcessorServiceClient(client_options=client_o
 storage_client = storage.Client()
 bq_client = bigquery.Client()
 pub_client = pubsub_v1.PublisherClient()
+datastore_client = datastore.Client()
 
 ACCEPTED_MIME_TYPES = set(
     ["application/pdf", "image/jpeg", "image/png", "image/tiff", "image/gif"]
@@ -58,6 +62,16 @@ ACCEPTED_MIME_TYPES = set(
 
 
 def write_to_bq(dataset_name, table_name, entities_extracted_dict):
+    """
+    Write Data to BigQuery
+    """
+    entity = datastore.Entity(key=datastore_client.key('visit'))
+    entity.update({
+        'timestamp': datetime.now()
+    })
+    datastore_client.put(entity)
+    print("Insert to Datastore: " + entity)
+
     """
     Write Data to BigQuery
     """

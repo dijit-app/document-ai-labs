@@ -70,10 +70,7 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
     # Convert to a JSON Object
     json_object = json.loads(json_data)
 
-    schema_update_options = [
-        bigquery.SchemaUpdateOption.ALLOW_FIELD_ADDITION,
-        bigquery.SchemaUpdateOption.ALLOW_FIELD_RELAXATION,
-    ]
+    schema_update_options = []
     source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
 
     job_config = bigquery.LoadJobConfig(

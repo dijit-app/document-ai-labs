@@ -73,11 +73,16 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
     schema_update_options = []
     source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
 
+    schema = [
+        bigquery.SchemaField("line_item_unit_price", "STRING")
+    ]
+
     job_config = bigquery.LoadJobConfig(
         autodetect=False,
         schema_update_options=schema_update_options,
         source_format=source_format,
     )
+    job_config.schema = schema
 
     job = bq_client.load_table_from_json(json_object, table_ref, job_config=job_config)
     print(job.result())  # Waits for table load to complete.

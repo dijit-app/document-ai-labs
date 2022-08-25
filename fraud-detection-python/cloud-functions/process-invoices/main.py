@@ -65,15 +65,17 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
     """
     Write Data to DataStore
     """
+    print("Insert to Datastore: ")
     row_to_insert_datastore = [entities_extracted_dict]
     json_datastore = json.dumps(row_to_insert_datastore, sort_keys=False)
     # Convert to a JSON Object
     json_object_datastore = json.loads(json_datastore)
 
+    print(json_object_datastore)
     entity = datastore.Entity(key=datastore_client.key('myKey'))
-    entity.update(json_object_datastore)
+    entity.update([json_object_datastore])
     datastore_client.put(entity)
-    print("Insert to Datastore: ")
+
     print(entity)
 
     """

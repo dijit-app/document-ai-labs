@@ -70,7 +70,8 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
         'timestamp': datetime.now()
     })
     datastore_client.put(entity)
-    print("Insert to Datastore: " + entity)
+    print("Insert to Datastore: ")
+    print(entity)
 
     """
     Write Data to BigQuery
@@ -98,8 +99,8 @@ def write_to_bq(dataset_name, table_name, entities_extracted_dict):
     )
     job_config.schema = schema
 
-    job = bq_client.load_table_from_json(json_object, table_ref, job_config=job_config)
-    print(job.result())  # Waits for table load to complete.
+    # job = bq_client.load_table_from_json(json_object, table_ref, job_config=job_config)
+    # print(job.result())  # Waits for table load to complete.
 
 
 def extract_document_entities(document: documentai.Document) -> dict:
